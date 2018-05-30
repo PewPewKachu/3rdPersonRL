@@ -31,10 +31,9 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
-            Debug.DrawRay(lookAt.transform.position, hit.point, Color.red);
-            
+            Debug.DrawRay(lookAt.transform.position, new Vector3(hit.point.x, hit.point.y - 1, hit.point.z), Color.red);
         }
 
         #region MouseLookInput
