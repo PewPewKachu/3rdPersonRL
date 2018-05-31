@@ -36,6 +36,8 @@ public class CameraScript : MonoBehaviour
             Debug.DrawRay(lookAt.transform.position, new Vector3(hit.point.x, hit.point.y - 1, hit.point.z), Color.red);
         }
 
+        lookAt.rotation = Quaternion.Slerp(lookAt.rotation, Quaternion.Euler(lookAt.rotation.x, transform.eulerAngles.y, lookAt.rotation.z), Time.deltaTime * 50);
+
         #region MouseLookInput
         currentX += Input.GetAxis("Mouse X") * sensX;
         currentY -= Input.GetAxis("Mouse Y") * sensY;
