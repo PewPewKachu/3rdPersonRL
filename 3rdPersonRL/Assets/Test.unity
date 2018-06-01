@@ -263,6 +263,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010525607592, guid: da00fcc513015e34b8db3a9188c3f22e,
+        type: 2}
+      propertyPath: debug.drawDesiredCollisionLines
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010525607592, guid: da00fcc513015e34b8db3a9188c3f22e,
+        type: 2}
+      propertyPath: debug.drawAdjustedCollisionLines
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: da00fcc513015e34b8db3a9188c3f22e, type: 2}
   m_IsPrefabParent: 0

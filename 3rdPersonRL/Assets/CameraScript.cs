@@ -79,14 +79,14 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        collisionHandler.CheckColliding(targetPos);
-        position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
-
         MoveToTarget();
         OrbitTarget();
         LookAtTarget();
         GetInput();
         ZoomInOnTarget();
+        collisionHandler.CheckColliding(targetPos);
+        position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
+
         
 
        
