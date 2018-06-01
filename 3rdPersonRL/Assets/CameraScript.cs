@@ -79,6 +79,17 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    void FixedUpdate()
+    {
+
+        
+    }
+
+    void LateUpdate()
+    {
         MoveToTarget();
         OrbitTarget();
         LookAtTarget();
@@ -87,11 +98,11 @@ public class CameraScript : MonoBehaviour
         collisionHandler.CheckColliding(targetPos);
         position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
 
-        
+
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 200f))
         {
-            Debug.DrawRay(target.transform.position, new Vector3(hit.point.x, hit.point.y - 1, hit.point.z), Color.red);
+            Debug.DrawLine(target.position, new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
         }
 
         target.rotation = Quaternion.Slerp(target.rotation, Quaternion.Euler(target.rotation.x, transform.eulerAngles.y, target.rotation.z), Time.deltaTime * 50);
@@ -118,26 +129,15 @@ public class CameraScript : MonoBehaviour
         }
 
 
-        
+
         Debug.DrawRay(transform.position, transform.forward * 100, Color.blue);
-    }
 
-    void FixedUpdate()
-    {
-
-        
-    }
-
-    void LateUpdate()
-    {
-
-        
 
     }
 
     void MoveToTarget()
     {
-        targetPos = target.position + Vector3.up * position.targetPosOffset.y + Vector3.forward * position.targetPosOffset.z + transform.TransformDirection(Vector3.right * position.targetPosOffset.x);
+        targetPos = target.position + Vector3.up * position.targetPosOffset.y + Vector3.forward * position.targetPosOffset.z + Vector3.right * position.targetPosOffset.x;
         destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation, 0) * -Vector3.forward * position.distanceFromTarget;
         destination += targetPos;
 
