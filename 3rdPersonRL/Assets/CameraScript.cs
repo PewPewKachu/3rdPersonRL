@@ -22,7 +22,7 @@ public class CameraScript : MonoBehaviour
         [HideInInspector]
         public float adjustmentDistance = -8;
     }
-
+    
     [System.Serializable]
     public class OrbitSettings
     {
@@ -33,7 +33,7 @@ public class CameraScript : MonoBehaviour
         public float vOrbitSmooth = 150;
         public float hOrbitSmooth = 150;
     }
-
+    
     [System.Serializable]
     public class InputSettings
     {
@@ -88,9 +88,6 @@ public class CameraScript : MonoBehaviour
         position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
 
         
-
-       
-
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
