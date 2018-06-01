@@ -79,6 +79,9 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        collisionHandler.CheckColliding(targetPos);
+        position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
+
         MoveToTarget();
         OrbitTarget();
         LookAtTarget();
@@ -112,14 +115,11 @@ public class CameraScript : MonoBehaviour
                 if (debug.drawAdjustedCollisionLines)
                 {
                     Debug.DrawLine(targetPos, collisionHandler.adjustedCameraClipPoints[i], Color.green);
-
                 }
 
             }
         }
 
-        collisionHandler.CheckColliding(targetPos);
-        position.adjustmentDistance = collisionHandler.GetAdjustedDistanceWithRayFrom(targetPos);
 
         
         Debug.DrawRay(transform.position, transform.forward * 100, Color.blue);
