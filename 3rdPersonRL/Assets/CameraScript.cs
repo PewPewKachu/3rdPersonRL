@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour
     public class PositionSettings
     {
         public Vector3 targetPosOffset = new Vector3(0, 1.5f, 0);
-        public float lookSmooth = 100f;
+        public float lookSmooth = 200f;
         public float distanceFromTarget = -8;
         public float zoomSmooth = 10;
         public float maxZoom = -2;
@@ -84,12 +84,9 @@ public class CameraScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        collisionHandler.UpdateCameraClipPoints(transform.position, transform.rotation, ref collisionHandler.adjustedCameraClipPoints);
+        collisionHandler.UpdateCameraClipPoints(destination, transform.rotation, ref collisionHandler.desiredCameraClipPoints);
 
-        
-    }
-
-    void LateUpdate()
-    {
         MoveToTarget();
         OrbitTarget();
         LookAtTarget();
@@ -107,8 +104,6 @@ public class CameraScript : MonoBehaviour
 
         target.rotation = Quaternion.Slerp(target.rotation, Quaternion.Euler(target.rotation.x, transform.eulerAngles.y, target.rotation.z), Time.deltaTime * 50);
 
-        collisionHandler.UpdateCameraClipPoints(transform.position, transform.rotation, ref collisionHandler.adjustedCameraClipPoints);
-        collisionHandler.UpdateCameraClipPoints(destination, transform.rotation, ref collisionHandler.desiredCameraClipPoints);
 
 
         if (debug.drawDesiredCollisionLines || debug.drawAdjustedCollisionLines)
@@ -133,11 +128,17 @@ public class CameraScript : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * 100, Color.blue);
 
 
+
+    }
+
+    void LateUpdate()
+    {
+        
     }
 
     void MoveToTarget()
     {
-        targetPos = target.position + Vector3.up * position.targetPosOffset.y + Vector3.forward * position.targetPosOffset.z + Vector3.right * position.targetPosOffset.x;
+        targetPos = target.position + position.targetPosOffset; //Vector3.up * position.targetPosOffset.y + Vector3.forward * position.targetPosOffset.z + Vector3.right * position.targetPosOffset.x;
         destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation, 0) * -Vector3.forward * position.distanceFromTarget;
         destination += targetPos;
 
@@ -185,7 +186,7 @@ public class CameraScript : MonoBehaviour
 
     void OrbitTarget()
     {
-        
+
 
         orbit.xRotation += vOrbitInput * orbit.vOrbitSmooth * Time.deltaTime;
         orbit.yRotation += hOrbitInput * orbit.vOrbitSmooth * Time.deltaTime;

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    float speed = 18;
+    float speed = 150;
     Rigidbody myRb;
 	// Use this for initialization
 	void Start ()
@@ -19,5 +19,7 @@ public class PlayerController : MonoBehaviour {
 
         
         myRb.AddForce(transform.forward * speed * vAxis);
+        myRb.AddForce(transform.right * speed * hAxis);
+
     }
 }
