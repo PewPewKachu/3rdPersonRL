@@ -25,28 +25,28 @@ public class roomGenerator : MonoBehaviour
             for (int i = 0; i < tempNum; i++)
             {
                 int index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetLeft() && Random.Range(0, 3) == 0)
+                if (!rooms[index - 1].GetComponent<roomGenerator>().GetLeft() && Random.Range(0, 3) == 0 && index < rooms.Length)
                 {
                     left = true;
                     rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
                     rooms[index].GetComponent<roomGenerator>().SetRight(true);
                 }
                 index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetRight() && Random.Range(0, 3) == 0)
+                if (!rooms[index - 1].GetComponent<roomGenerator>().GetRight() && Random.Range(0, 3) == 0 && index < rooms.Length)
                 {
                     right = true;
                     rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
                     rooms[index].GetComponent<roomGenerator>().SetLeft(true);
                 }
                 index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetForward() && Random.Range(0, 3) == 0)
+                if (!rooms[index - 1].GetComponent<roomGenerator>().GetForward() && Random.Range(0, 3) == 0 && index < rooms.Length)
                 {
                     forward = true;
                     rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
                     rooms[index].GetComponent<roomGenerator>().SetBackward(true);
                 }
                 index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetBackward() && Random.Range(0, 3) == 0)
+                if (!rooms[index - 1].GetComponent<roomGenerator>().GetBackward() && Random.Range(0, 3) == 0 && index < rooms.Length)
                 {
                     backward = true;
                     rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
