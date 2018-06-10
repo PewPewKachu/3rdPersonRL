@@ -12,7 +12,7 @@ public class roomGenerator : MonoBehaviour
 
 	void Start ()
     {
-        rooms = new GameObject[maxRooms];
+        rooms = new GameObject[Random.Range(minRooms, maxRooms)];
         rooms[0] = this.gameObject;
 	}
 
@@ -21,43 +21,52 @@ public class roomGenerator : MonoBehaviour
         if(generate)
         {
             generate = false;
-            int tempNum = Random.Range(minRooms, maxRooms);
-            for (int i = 0; i < tempNum; i++)
+            for (int i = 0; i < rooms.Length; i++)
             {
-                int index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetLeft() && Random.Range(0, 3) == 0 && index < rooms.Length)
+                int index = nextEmptyIndex() - 1;
+                if (!rooms[index].GetComponent<roomGenerator>().GetLeft() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
-                    left = true;
-                    rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
-                    rooms[index].GetComponent<roomGenerator>().SetRight(true);
+                    int TEMP = nextEmptyIndex();
+                    if (!checkPosition(rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
+                    {
+                        rooms[index].GetComponent<roomGenerator>().SetLeft(true);
+                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP].GetComponent<roomGenerator>().SetRight(true);
+                    }
                 }
-                index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetRight() && Random.Range(0, 3) == 0 && index < rooms.Length)
+                if (!rooms[index].GetComponent<roomGenerator>().GetRight() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
-                    right = true;
-                    rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
-                    rooms[index].GetComponent<roomGenerator>().SetLeft(true);
+                    int TEMP = nextEmptyIndex();
+                    if (!checkPosition(rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
+                    {
+                        rooms[index].GetComponent<roomGenerator>().SetRight(true);
+                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP].GetComponent<roomGenerator>().SetLeft(true);
+                    }
                 }
-                index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetForward() && Random.Range(0, 3) == 0 && index < rooms.Length)
+                if (!rooms[index].GetComponent<roomGenerator>().GetForward() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
-                    forward = true;
-                    rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
-                    rooms[index].GetComponent<roomGenerator>().SetBackward(true);
+                    int TEMP = nextEmptyIndex();
+                    if (!checkPosition(rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
+                    {
+                        rooms[index].GetComponent<roomGenerator>().SetForward(true);
+                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
+                    }
                 }
-                index = nextEmptyIndex();
-                if (!rooms[index - 1].GetComponent<roomGenerator>().GetBackward() && Random.Range(0, 3) == 0 && index < rooms.Length)
+                if (!rooms[index].GetComponent<roomGenerator>().GetBackward() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
-                    backward = true;
-                    rooms[index] = Instantiate(this.gameObject, rooms[index - 1].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
-                    rooms[index].GetComponent<roomGenerator>().SetForward(true);
+                    int TEMP = nextEmptyIndex();
+                    if (!checkPosition(rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
+                    {
+                        rooms[index].GetComponent<roomGenerator>().SetBackward(true);
+                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
+                    }
                 }
             }
         }
-
-        if (nextEmptyIndex() != rooms.Length
-            && nextEmptyIndex() != 1)
-            generate = true;
+        
     }
 
     public int nextEmptyIndex()
@@ -67,7 +76,27 @@ public class roomGenerator : MonoBehaviour
             if (rooms[i] == null)
                 return i;
         }
-        return rooms.Length;
+        return rooms.Length - 1;
+    }
+
+    public bool checkEmpty()
+    {
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            if (rooms[i] == null)
+                return false;
+        }
+        return true;
+    }
+
+    public bool checkPosition(Vector3 pos)
+    {
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            if (rooms[i] != null && rooms[i].transform.position == pos)
+                return true;
+        }
+        return false;
     }
 
     public void Generate()

@@ -16,19 +16,19 @@ public class wallscript : MonoBehaviour
         {
             case wall.forward:
                 if (generator.GetForward())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.backward:
                 if (generator.GetBackward())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.right:
                 if (generator.GetRight())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.left:
                 if (generator.GetLeft())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
         }
 	}
@@ -39,19 +39,19 @@ public class wallscript : MonoBehaviour
         {
             case wall.forward:
                 if (generator.GetForward())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.backward:
                 if (generator.GetBackward())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.right:
                 if (generator.GetRight())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
             case wall.left:
                 if (generator.GetLeft())
-                    gameObject.SetActive(false);
+                    Destroy(gameObject);
                 break;
         }
     }
