@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour
     public class PositionSettings
     {
         public Vector3 targetPosOffset = new Vector3(0, 1.5f, 0);
-        public float lookSmooth = 200f;
+        public float lookSmooth = 200.0f;
         public float distanceFromTarget = -8;
         public float zoomSmooth = 10;
         public float maxZoom = -2;
