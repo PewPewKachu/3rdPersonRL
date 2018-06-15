@@ -6,6 +6,7 @@ public class roomGenerator : MonoBehaviour
 {
     [SerializeField] bool generate;
     [SerializeField] int maxRooms, minRooms;
+    [SerializeField] GameObject room;
     GameObject[] rooms;
     GameObject parent;
     bool left, right, forward, backward;
@@ -30,7 +31,7 @@ public class roomGenerator : MonoBehaviour
                     if (!checkPosition(rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
                     {
                         rooms[index].GetComponent<roomGenerator>().SetLeft(true);
-                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
                         rooms[TEMP].GetComponent<roomGenerator>().SetRight(true);
                     }
                 }
@@ -40,7 +41,7 @@ public class roomGenerator : MonoBehaviour
                     if (!checkPosition(rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
                     {
                         rooms[index].GetComponent<roomGenerator>().SetRight(true);
-                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
                         rooms[TEMP].GetComponent<roomGenerator>().SetLeft(true);
                     }
                 }
@@ -50,7 +51,7 @@ public class roomGenerator : MonoBehaviour
                     if (!checkPosition(rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                     {
                         rooms[index].GetComponent<roomGenerator>().SetForward(true);
-                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
                         rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
                     }
                 }
@@ -60,7 +61,7 @@ public class roomGenerator : MonoBehaviour
                     if (!checkPosition(rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                     {
                         rooms[index].GetComponent<roomGenerator>().SetBackward(true);
-                        rooms[TEMP] = Instantiate(this.gameObject, rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
                         rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
                     }
                 }
