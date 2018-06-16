@@ -15,6 +15,8 @@ public class roomGenerator : MonoBehaviour
 
 	void Start ()
     {
+        if (room == null)
+            room = this.gameObject;
         rooms = new GameObject[Random.Range(minRooms, maxRooms)];
         rooms[0] = this.gameObject;
         Cursor.visible = false;

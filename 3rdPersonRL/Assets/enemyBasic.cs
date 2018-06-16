@@ -10,7 +10,7 @@ public class enemyBasic : MonoBehaviour
     public LayerMask mask;
     public UnityEngine.AI.NavMeshAgent agent;
 
-    public float speed, sightDis, attentionSpan;
+    public float speed, attentionSpan;
     float counter;
 
     bool agro;
@@ -65,7 +65,8 @@ public class enemyBasic : MonoBehaviour
                 break;
 
             case logicState.followTarget:
-                agent.SetDestination(player.transform.position);
+                if(agent.isOnNavMesh)
+                    agent.SetDestination(player.transform.position);
                 break;
         }
     }
