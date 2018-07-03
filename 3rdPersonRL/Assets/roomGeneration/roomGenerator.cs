@@ -6,8 +6,9 @@ using UnityEngine.AI;
 public class roomGenerator : MonoBehaviour
 {
     [SerializeField] bool generate;
-    [SerializeField] int maxRooms, minRooms;
-    [SerializeField] GameObject room;
+    [SerializeField] int maxRooms, minRooms, enemyNum, spawnRate;
+    [SerializeField] GameObject[] enemies;
+    [SerializeField] GameObject[] room;
     GameObject[] rooms;
     GameObject parent;
     bool left, right, forward, backward;
@@ -15,8 +16,6 @@ public class roomGenerator : MonoBehaviour
 
 	void Start ()
     {
-        if (room == null)
-            room = this.gameObject;
         rooms = new GameObject[Random.Range(minRooms, maxRooms)];
         rooms[0] = this.gameObject;
         Cursor.visible = false;
@@ -35,11 +34,13 @@ public class roomGenerator : MonoBehaviour
                 if (!rooms[index].GetComponent<roomGenerator>().GetLeft() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
                     int TEMP = nextEmptyIndex();
-                    if (!checkPosition(rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
+                    int rand = Random.Range(0, room.Length);
+                    if (!checkPosition(rooms[index].transform.position - new Vector3(room[rand].GetComponent<BoxCollider>().size.x, 0, 0)))
                     {
+
                         rooms[index].GetComponent<roomGenerator>().SetLeft(true);
 
-                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position - new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP] = Instantiate(room[rand], rooms[index].transform.position - new Vector3(room[rand].GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
 
                         rooms[TEMP].GetComponent<roomGenerator>().SetRight(true);
 
@@ -49,16 +50,28 @@ public class roomGenerator : MonoBehaviour
                             rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
                         if (checkPosition(rooms[TEMP].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                             rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
+
+                        int anotherTemp = Random.Range(0, spawnRate);
+                        if(anotherTemp == 0)
+                        {
+                            for (int t = 0; t < enemyNum; t++)
+                            {
+                                int randt = Random.Range(0, enemies.Length);
+                                Instantiate(enemies[randt], rooms[TEMP].transform.position + new Vector3(Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.x, rooms[TEMP].GetComponent<BoxCollider>().size.x),0, Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.z, rooms[TEMP].GetComponent<BoxCollider>().size.z)), transform.rotation);
+                            }
+                        }
                     }
                 }
                 if (!rooms[index].GetComponent<roomGenerator>().GetRight() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
                     int TEMP = nextEmptyIndex();
-                    if (!checkPosition(rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0)))
+                    int rand = Random.Range(0, room.Length);
+                    if (!checkPosition(rooms[index].transform.position + new Vector3(room[rand].GetComponent<BoxCollider>().size.x, 0, 0)))
                     {
+
                         rooms[index].GetComponent<roomGenerator>().SetRight(true);
 
-                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position + new Vector3(GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
+                        rooms[TEMP] = Instantiate(room[rand], rooms[index].transform.position + new Vector3(room[rand].GetComponent<BoxCollider>().size.x, 0, 0), transform.rotation);
 
                         rooms[TEMP].GetComponent<roomGenerator>().SetLeft(true);
 
@@ -68,16 +81,28 @@ public class roomGenerator : MonoBehaviour
                             rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
                         if (checkPosition(rooms[TEMP].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                             rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
+
+                        int anotherTemp = Random.Range(0, spawnRate);
+                        if (anotherTemp == 0)
+                        {
+                            for (int t = 0; t < enemyNum; t++)
+                            {
+                                int randt = Random.Range(0, enemies.Length);
+                                Instantiate(enemies[randt], rooms[TEMP].transform.position + new Vector3(Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.x, rooms[TEMP].GetComponent<BoxCollider>().size.x), 0, Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.z, rooms[TEMP].GetComponent<BoxCollider>().size.z)), transform.rotation);
+                            }
+                        }
                     }
                 }
                 if (!rooms[index].GetComponent<roomGenerator>().GetForward() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
                     int TEMP = nextEmptyIndex();
-                    if (!checkPosition(rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
+                    int rand = Random.Range(0, room.Length);
+                    if (!checkPosition(rooms[index].transform.position + new Vector3(0, 0, room[rand].GetComponent<BoxCollider>().size.z)))
                     {
+
                         rooms[index].GetComponent<roomGenerator>().SetForward(true);
 
-                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP] = Instantiate(room[rand], rooms[index].transform.position + new Vector3(0, 0, room[rand].GetComponent<BoxCollider>().size.z), transform.rotation);
                        
                         rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
 
@@ -87,16 +112,28 @@ public class roomGenerator : MonoBehaviour
                             rooms[TEMP].GetComponent<roomGenerator>().SetRight(true);
                         if (checkPosition(rooms[TEMP].transform.position + new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                             rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
+
+                        int anotherTemp = Random.Range(0, spawnRate);
+                        if (anotherTemp == 0)
+                        {
+                            for (int t = 0; t < enemyNum; t++)
+                            {
+                                int randt = Random.Range(0, enemies.Length);
+                                Instantiate(enemies[randt], rooms[TEMP].transform.position + new Vector3(Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.x, rooms[TEMP].GetComponent<BoxCollider>().size.x), 0, Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.z, rooms[TEMP].GetComponent<BoxCollider>().size.z)), transform.rotation);
+                            }
+                        }
                     }
                 }
                 if (!rooms[index].GetComponent<roomGenerator>().GetBackward() && Random.Range(0, 2) == 0 && index < rooms.Length)
                 {
                     int TEMP = nextEmptyIndex();
-                    if (!checkPosition(rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
+                    int rand = Random.Range(0, room.Length);
+                    if (!checkPosition(rooms[index].transform.position - new Vector3(0, 0, room[rand].GetComponent<BoxCollider>().size.z)))
                     {
+
                         rooms[index].GetComponent<roomGenerator>().SetBackward(true);
 
-                        rooms[TEMP] = Instantiate(room, rooms[index].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z), transform.rotation);
+                        rooms[TEMP] = Instantiate(room[rand], rooms[index].transform.position - new Vector3(0, 0, room[rand].GetComponent<BoxCollider>().size.z), transform.rotation);
 
                         rooms[TEMP].GetComponent<roomGenerator>().SetForward(true);
 
@@ -106,6 +143,16 @@ public class roomGenerator : MonoBehaviour
                             rooms[TEMP].GetComponent<roomGenerator>().SetRight(true);
                         if (checkPosition(rooms[TEMP].transform.position - new Vector3(0, 0, GetComponent<BoxCollider>().size.z)))
                             rooms[TEMP].GetComponent<roomGenerator>().SetBackward(true);
+
+                        int anotherTemp = Random.Range(0, spawnRate);
+                        if (anotherTemp == 0)
+                        {
+                            for (int t = 0; t < enemyNum; t++)
+                            {
+                                int randt = Random.Range(0, enemies.Length);
+                                Instantiate(enemies[randt], rooms[TEMP].transform.position + new Vector3(Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.x, rooms[TEMP].GetComponent<BoxCollider>().size.x), 0, Random.Range(-rooms[TEMP].GetComponent<BoxCollider>().size.z, rooms[TEMP].GetComponent<BoxCollider>().size.z)), transform.rotation);
+                            }
+                        }
                     }
                 }
             }
