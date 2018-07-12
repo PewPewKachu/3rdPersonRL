@@ -507,6 +507,11 @@ Prefab:
       propertyPath: m_RenderingPath
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 20000012771736916, guid: 47a2f771d4354644e8a3157df58b3de1,
+        type: 2}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47a2f771d4354644e8a3157df58b3de1, type: 2}
   m_IsPrefabAsset: 0
