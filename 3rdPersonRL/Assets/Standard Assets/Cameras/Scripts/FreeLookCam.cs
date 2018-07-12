@@ -38,6 +38,7 @@ namespace UnityStandardAssets.Cameras
 
 	        m_PivotTargetRot = m_Pivot.transform.localRotation;
 			m_TransformTargetRot = transform.localRotation;
+            m_Pivot.position += new Vector3(0, 1, 0);
         }
 
 
@@ -54,7 +55,7 @@ namespace UnityStandardAssets.Cameras
             RaycastHit hit;
             if (Physics.Raycast(m_Cam.transform.position, m_Cam.transform.TransformDirection(Vector3.forward), out hit, 200f))
             {
-                Debug.DrawLine(m_Target.position, new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
+                Debug.DrawLine(m_Target.position + new Vector3(0, 2, 0), new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
             }
 
             Debug.DrawRay(m_Cam.transform.position, m_Cam.transform.forward * 100, Color.blue);
