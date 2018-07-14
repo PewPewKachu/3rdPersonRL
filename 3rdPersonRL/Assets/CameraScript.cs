@@ -62,7 +62,7 @@ public class CameraScript : MonoBehaviour
     Vector3 adjustedDestination = Vector3.zero;
     Vector3 camVel = Vector3.zero;
 
-    float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
+    float vOrbitInput, hOrbitInput, zoomInput;
 
     // Use this for initialization
     void Start()
@@ -180,7 +180,6 @@ public class CameraScript : MonoBehaviour
     {
         vOrbitInput = Input.GetAxis("Mouse Y");
         hOrbitInput = Input.GetAxis("Mouse X");
-        hOrbitSnapInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL_SNAP);
         zoomInput = Input.GetAxisRaw(input.ZOOM);
     }
 
