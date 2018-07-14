@@ -60,7 +60,7 @@ public class enemyBasic : MonoBehaviour
         switch (enemyState)
         {
             case logicState.roam:
-                if(Random.Range(0,25) == 0)
+                if(agent.isOnNavMesh && Random.Range(0,25) == 0)
                     agent.SetDestination(origin + new Vector3(Random.Range(-4,5), 0, Random.Range(-4,5)));
                 break;
 

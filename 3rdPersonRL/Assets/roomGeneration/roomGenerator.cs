@@ -17,7 +17,8 @@ public class roomGenerator : MonoBehaviour
 	void Start ()
     {
         rooms = new GameObject[Random.Range(minRooms, maxRooms)];
-        rooms[0] = this.gameObject;
+        if(generate)
+            rooms[0] = this.gameObject;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         nav = GameObject.FindGameObjectWithTag("navMesh").GetComponent<NavMeshSurface>();
