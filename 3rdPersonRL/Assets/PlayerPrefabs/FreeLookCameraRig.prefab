@@ -44,7 +44,7 @@ GameObject:
   m_Layer: 0
   m_Name: FreeLookCameraRig
   m_TagString: Untagged
-  m_Icon: {fileID: -215833656, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -59,7 +59,7 @@ GameObject:
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
-  m_Icon: {fileID: -1500306622, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44af8091779fcb40801d5b284353dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 4000013155578524, guid: a6eb5ee9004ed8b439a11465fc4ad1b1, type: 2}
+  m_Target: {fileID: 4270956698515780, guid: 0e5b0040bd920cc4da06c3b11da8ff6c, type: 2}
   m_AutoTargetPlayer: 1
   m_UpdateType: 1
   m_MoveSpeed: 100
@@ -211,6 +211,10 @@ MonoBehaviour:
   m_TiltMin: 45
   m_LockCursor: 1
   m_VerticalAutoReturn: 0
+  hitTag: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!124 &124000010560236246
 Behaviour:
   m_ObjectHideFlags: 1
