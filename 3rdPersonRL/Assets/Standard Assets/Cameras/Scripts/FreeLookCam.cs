@@ -28,7 +28,7 @@ namespace UnityStandardAssets.Cameras
 		private Quaternion m_PivotTargetRot;
 		private Quaternion m_TransformTargetRot;
 
-
+        
         [SerializeField]
         string hitTag;
         [SerializeField]
@@ -58,12 +58,12 @@ namespace UnityStandardAssets.Cameras
 
             #region DebugShootLines
             
-            //playerLayer.value = ~(1 << LayerMask.NameToLayer("Player"));
+            playerLayer.value = ~(1 << LayerMask.NameToLayer("Player"));
 
             RaycastHit hit;
             if (Physics.Raycast(m_Cam.transform.position, m_Cam.transform.TransformDirection(Vector3.forward), out hit, 200f, playerLayer.value))
             {
-                Debug.DrawLine(m_Target.position + new Vector3(0, 2f, 0), new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
+                Debug.DrawLine(m_Target.position , new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
                 hitTag = hit.transform.tag;
             }
 
