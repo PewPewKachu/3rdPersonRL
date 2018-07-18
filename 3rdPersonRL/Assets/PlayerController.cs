@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityStandardAssets.Cameras;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
     float timeInAir;
     [SerializeField]
     int numJumps;
+
+
     // Use this for initialization
     void Start()
     {
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
         myCC.Move(transform.right * speed * hAxis * Time.deltaTime);
         myCC.Move(transform.up * yVel * Time.deltaTime);
 
+        
     }
 
     private void JumpCheck()
