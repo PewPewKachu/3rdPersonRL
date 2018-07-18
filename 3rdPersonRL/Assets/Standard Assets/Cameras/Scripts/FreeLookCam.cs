@@ -43,7 +43,7 @@ namespace UnityStandardAssets.Cameras
 
 	        m_PivotTargetRot = m_Pivot.transform.localRotation;
 			m_TransformTargetRot = transform.localRotation;
-            m_Pivot.position += new Vector3(0, 1, 0);
+            m_Pivot.position += new Vector3(0, 0.25f, 0);
         }
 
 
