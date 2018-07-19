@@ -9,7 +9,6 @@ public class RoomGen : MonoBehaviour
     float numOfRooms;
 
     [SerializeField] GameObject[] hallways, rooms; //Templates
-    [SerializeField] Transform[] doors; //Doors
 
     GameObject[] GeneratedRooms, GeneratedHalls, HallsHold, RoomsHold; //Data Storage
 
