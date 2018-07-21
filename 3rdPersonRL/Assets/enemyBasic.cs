@@ -5,8 +5,8 @@ using UnityEngine;
 public class enemyBasic : MonoBehaviour
 {
     enum logicState { roam, followTarget }
-
     [SerializeField] logicState enemyState;
+
     public LayerMask mask;
     public UnityEngine.AI.NavMeshAgent agent;
 
