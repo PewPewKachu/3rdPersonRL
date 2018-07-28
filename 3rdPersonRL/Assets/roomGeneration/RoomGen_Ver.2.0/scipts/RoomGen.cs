@@ -8,9 +8,9 @@ public class RoomGen : MonoBehaviour
     [SerializeField] int MaxRooms, MinRooms;
     float numOfRooms;
 
-    [SerializeField] GameObject[] hallways, rooms; //Templates
+    [SerializeField] GameObject[] hallways, rooms, specialRooms; //Templates
 
-    GameObject[] GeneratedRooms, GeneratedHalls, HallsHold, RoomsHold; //Data Storage
+    GameObject[] GeneratedRooms, GeneratedHalls, HallsHold, RoomsHold, specialHold; //Data Storage
 
     NavMeshSurface nav;
 	void Start ()
@@ -21,6 +21,11 @@ public class RoomGen : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         //Create Templates
+        specialHold = new GameObject[specialRooms.Length];
+        for (int i = 0; i < specialRooms.Length; i++)
+        {
+            specialHold[i] = Instantiate(specialRooms[i], transform.position, transform.rotation);
+        }
         HallsHold = new GameObject[hallways.Length];
         for (int i = 0; i < hallways.Length; i++)
         {
@@ -32,7 +37,7 @@ public class RoomGen : MonoBehaviour
             RoomsHold[i] = Instantiate(rooms[i], transform.position, transform.rotation);
         }
 
-        GeneratedHalls = new GameObject[MaxRooms + 1];
+        GeneratedHalls = new GameObject[MaxRooms + specialRooms.Length];
         GeneratedRooms = new GameObject[MaxRooms];
 
         GeneratedRooms[0] = this.gameObject;
@@ -45,7 +50,39 @@ public class RoomGen : MonoBehaviour
             int index = Random.Range(0, i); //Get Random Room
             GeneratedRooms[i] = GenerateRoom(GeneratedRooms[index], i); //Generate from RandRoom
 
+
             if (GeneratedRooms[i] == null)
+                i--;
+            else
+            {
+                index = Random.Range(0, i);
+                int specialCheck = Random.Range(0, 2);
+                if (specialCheck == 0)
+                {
+                    int randSpecial = Random.Range(0, specialHold.Length);
+                    if (specialHold[randSpecial].transform.position == transform.position)
+                    {
+                        Debug.Log("special tried");
+                        GameObject temp = GenerateRoom(GeneratedRooms[index], i + 1, specialHold[randSpecial]);
+                        if (temp == specialHold[randSpecial] && temp.transform.position != transform.position)
+                        {
+                            GeneratedRooms[i + 1] = temp;
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Force Generate special
+        for (int i = 0; i < specialHold.Length; i++)
+        {
+            int rand = Random.Range(0, (int)numOfRooms); //Get random Room
+            if (specialHold[i].transform.position == transform.position)
+                GenerateRoom(GeneratedRooms[rand], (int)numOfRooms + 1, specialHold[i]);//Force Spawn
+
+
+           if (specialHold[i].transform.position == transform.position)//Check if spawned
                 i--;
         }
 
@@ -64,7 +101,7 @@ public class RoomGen : MonoBehaviour
         nav.BuildNavMesh();
     }
 
-    public GameObject GenerateRoom(GameObject room, int _index)
+    public GameObject GenerateRoom(GameObject room, int _index, GameObject _forced = null)
     {
         int temp2 = 0;
         Transform[] _doors = room.GetComponent<RoomScript>().getDoors();
@@ -109,7 +146,11 @@ public class RoomGen : MonoBehaviour
         for (int i = 0; i < rooms.Length; i++)
         {
             int roomTemp = Random.Range(0, rooms.Length);
-            GameObject Room = RoomsHold[roomTemp];
+            GameObject Room;
+            if (_forced == null)
+                Room = RoomsHold[roomTemp];
+            else
+                Room = _forced;
             RoomScript roomDoors = Room.GetComponent<RoomScript>();
 
             for (int j = 0; j < roomDoors.getDoors().Length; j++)
@@ -125,15 +166,23 @@ public class RoomGen : MonoBehaviour
 
                 if (CheckCollision(Room, spawnedHall))
                 {
+                    GameObject spawned;
                     //Generate Room
-                    GameObject spawned = Instantiate(rooms[roomTemp], Room.transform.position, Room.transform.rotation);
+                    if (_forced == null)
+                         spawned = Instantiate(rooms[roomTemp], Room.transform.position, Room.transform.rotation);
+                    else
+                        spawned = _forced;
+
                     spawned.GetComponent<RoomScript>().setDoor(jTemp); //Set ActiveDoor
                     room.GetComponent<RoomScript>().setDoor(temp2);
                     GeneratedHalls[_index] = spawnedHall;
 
                     //Reset Template
-                    Room.transform.position = transform.position;
-                    Room.transform.rotation = transform.rotation;
+                    if (_forced == null)
+                    {
+                        Room.transform.position = transform.position;
+                        Room.transform.rotation = transform.rotation;
+                    }
 
                     return spawned;
                 }

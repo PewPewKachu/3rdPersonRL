@@ -62,7 +62,7 @@ public class DoorBehaviour : MonoBehaviour
     public void collisionCheck()
     {
         transform.position = origin;
-        if (curState == DoorState.closed && Vector3.Distance(transform.position, player.transform.position) <= 2.5f  && Input.GetKeyDown(KeyCode.F))
+        if (curState == DoorState.closed && Vector3.Distance(transform.position, player.transform.position) <= 3f  && Input.GetKeyDown(KeyCode.F))
         {
             broken = true;
             Vector3 dir = (transform.position - player.transform.position).normalized;

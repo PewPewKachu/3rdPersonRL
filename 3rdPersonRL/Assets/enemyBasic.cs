@@ -4,6 +4,96 @@ using UnityEngine;
 
 public class enemyBasic : MonoBehaviour
 {
+    enum logicState { roam, followTarget, hostile, attack }
+    [SerializeField] logicState logic;
+
+    [SerializeField] float health, speed, attentionSpan, attackDistance;
+
+    GameObject player;
+    FieldOfView fov;
+
+    bool agro;
+
+    private void Start()
+    {
+        fov = GetComponent<FieldOfView>();
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (!fov.FindTarget())
+        {
+            if (agro == true)
+                Invoke("loseTarget", attentionSpan);
+            agro = false;
+        }
+        else
+        {
+            if (agro == false)
+            {
+                logic = logicState.followTarget;
+                player = fov.visibleTarget;
+            }
+            agro = true;
+        }
+
+        switch (logic)
+        {
+            case logicState.roam:
+                break;
+
+            case logicState.followTarget:
+                if (player != null && Vector3.Distance(transform.position, player.transform.position) < attackDistance)
+                    logic = logicState.attack;
+                break;
+
+            case logicState.hostile:
+                break;
+
+            case logicState.attack:
+                if (player != null && Vector3.Distance(transform.position, player.transform.position) > attackDistance)
+                    logic = logicState.followTarget;
+                break;
+
+            default:
+                break;
+        }
+
+    }
+    /*
+    public logicState GetState()
+    {
+        return logic;
+    }
+    */
+    public void loseTarget()
+    {
+        if (agro == false)
+        {
+            player = null;
+            fov.setTargetNull();
+
+            logic = logicState.roam;
+        }
+    }
+
+    public void SetState(int _num)
+    {
+        if (_num == 1)
+            logic = logicState.roam;
+        else if (_num == 2)
+            logic = logicState.followTarget;
+        else if (_num == 3)
+            logic = logicState.hostile;
+        else if (_num == 4)
+            logic = logicState.attack;
+        else
+            Debug.Log("stateSet_Incorrect");
+    }
+
+    //GROSS
+    /*
     enum logicState { roam, followTarget }
     [SerializeField] logicState enemyState;
 
@@ -70,4 +160,6 @@ public class enemyBasic : MonoBehaviour
                 break;
         }
     }
+    */
+
 }
