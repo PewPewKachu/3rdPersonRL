@@ -43,7 +43,7 @@ namespace UnityStandardAssets.Cameras
 
 	        m_PivotTargetRot = m_Pivot.transform.localRotation;
 			m_TransformTargetRot = transform.localRotation;
-            m_Pivot.position += new Vector3(0, 0.25f, 0);
+            m_Pivot.position += new Vector3(0, 1f, 0);
         }
 
 
@@ -63,11 +63,11 @@ namespace UnityStandardAssets.Cameras
             RaycastHit hit;
             if (Physics.Raycast(m_Cam.transform.position, m_Cam.transform.TransformDirection(Vector3.forward), out hit, 200f, playerLayer.value))
             {
-                Debug.DrawLine(m_Target.position , new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
+                Debug.DrawLine(m_Target.position + new Vector3(0, 2f, 0), new Vector3(hit.point.x, hit.point.y, hit.point.z), Color.red);
                 hitTag = hit.transform.tag;
             }
 
-            Debug.DrawRay(m_Cam.transform.position, m_Cam.transform.forward * 100, Color.blue);
+            Debug.DrawRay(m_Cam.transform.position, m_Cam.transform.forward * 100f, Color.blue);
             #endregion
 
             //Rotate Character with cam
@@ -75,6 +75,13 @@ namespace UnityStandardAssets.Cameras
 
 
 
+        }
+
+        public RaycastHit GetCameraHit()
+        {
+            RaycastHit hit;
+            Physics.Raycast(m_Cam.transform.position, m_Cam.transform.TransformDirection(Vector3.forward), out hit, 200f, playerLayer.value);
+            return hit;
         }
 
         void ZoomInOnTarget()
