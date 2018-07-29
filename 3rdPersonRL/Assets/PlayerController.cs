@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     int numJumps;
 
-
+    [SerializeField] GameObject primary;
+    [SerializeField] FreeLookCam camAim;
+    [SerializeField] playerMod pmods;
     // Use this for initialization
     void Start()
     {
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour
 
         //Check if player wants to jump - if so try to jump
         JumpCheck();
-
+        ShootCheck();
         
 
         yVel -= 25f * timeInAir * Time.fixedDeltaTime;
@@ -44,6 +46,18 @@ public class PlayerController : MonoBehaviour
         myCC.Move(transform.right * speed * hAxis * Time.deltaTime);
         myCC.Move(transform.up * yVel * Time.deltaTime);
 
+        
+    }
+
+    private void ShootCheck()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (primary != null)
+            {
+                primary.GetComponent<Gun>().Shoot(camAim.GetCameraHit());
+            }
+        }
         
     }
 
